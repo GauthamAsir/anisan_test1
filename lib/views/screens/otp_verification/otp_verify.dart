@@ -1,17 +1,16 @@
 import 'dart:async';
 
-import 'package:anisan/constants/MyColors.dart';
 import 'package:anisan/constants/sizeConfig.dart';
 import 'package:anisan/state/auth/auth.dart';
 import 'package:anisan/views/screens/home/home.dart';
 import 'package:anisan/views/screens/otp_verification/components/OTPField.dart';
-import 'package:anisan/views/screens/splash/SplashScreen.dart';
+import 'package:anisan/widgets/button.dart';
 import 'package:anisan/widgets/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import 'components/SendingOTP.dart';
+import 'components/loading.dart';
 
 class OtpVerification extends StatefulWidget {
   final String _phoneNo;
@@ -22,7 +21,7 @@ class OtpVerification extends StatefulWidget {
 
 class _OtpVerificationState extends State<OtpVerification> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  bool codeSent = false;
+  bool codeSent = false, loading = false;
   String verificationId, smsCode = "";
 
   StreamController<ErrorAnimationType> errorController;
@@ -59,6 +58,16 @@ class _OtpVerificationState extends State<OtpVerification> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Visibility(
+                  visible: loading,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: Sizes.screenHeight,
+                    width: Sizes.screenWidth,
+                    child: Loading(
+                      description: 'Verifying Code',
+                    ),
+                  )),
               if (codeSent) ...[
                 Text(
                   'Otp Sent to ${widget._phoneNo}',
@@ -78,16 +87,17 @@ class _OtpVerificationState extends State<OtpVerification> {
                 SizedBox(
                   height: Sizes.screenHeight * 0.4,
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 20),
-                  child: FlatButton(
+                Button(
+                    buttonText: "verify".trim().toUpperCase(),
                     onPressed: () async {
                       if (smsCode.length != 6) {
                         errorController.add(ErrorAnimationType
                             .shake); // Triggering error shake animation
                         return;
                       }
+
+                      loading = true;
+                      handleState();
 
                       try {
                         await Auth.signInWithOTP(smsCode, verificationId);
@@ -96,10 +106,8 @@ class _OtpVerificationState extends State<OtpVerification> {
                           navigate(Home());
                         }
                       } catch (e) {
-                        if (Auth.auth.currentUser != null) {
-                          ToastText.toast('Error in');
-                          navigate(SplashScreen());
-                        }
+                        loading = false;
+                        handleState();
                         var ea = (e as FirebaseAuthException);
                         ToastText.toast(
                           ea.code == "invalid-verification-code"
@@ -109,24 +117,12 @@ class _OtpVerificationState extends State<OtpVerification> {
                                   : ea.code,
                         );
                       }
-                    },
-                    child: Center(
-                      child: Text(
-                        "verify".trim().toUpperCase(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    color: MyColors.primaryColor,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                )
+                    }),
               ] else ...[
-                const SendingOTP(),
+                const Loading(
+                  text: 'Sending OTP...',
+                  description: 'Sending OTP to your number...',
+                ),
                 SizedBox(
                   height: Sizes.defaultSize * 8,
                   width: Sizes.screenWidth,
@@ -164,11 +160,13 @@ class _OtpVerificationState extends State<OtpVerification> {
         // Sign the user in (or link) with the credential
         this.verificationId = verificationId;
         this.codeSent = true;
-        setState(() {});
+        handleState();
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         this.verificationId = verificationId;
       },
     );
   }
+
+  handleState() => (mounted) ? setState(() => null) : null;
 }

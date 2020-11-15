@@ -1,4 +1,5 @@
 import 'package:anisan/constants/sizeConfig.dart';
+import 'package:anisan/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -60,8 +61,7 @@ class _LoginState extends State<Login> {
               controller: _controller,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.only(bottom: 5),
-                labelText: "mobile_number".trim(),
-                helperText: "otp_sent".trim(),
+                labelText: "Mobile Number",
                 helperStyle: TextStyle(fontSize: 14),
                 errorStyle: TextStyle(fontSize: 14),
                 prefixText: "+91 ",
@@ -70,7 +70,8 @@ class _LoginState extends State<Login> {
             SizedBox(
               height: Sizes.screenHeight * 0.2,
             ),
-            FlatButton(
+            Button(
+                buttonText: 'Send Otp',
                 onPressed: () {
                   if (_validated) {
                     Navigator.push(
@@ -81,11 +82,7 @@ class _LoginState extends State<Login> {
                   } else {
                     toast('Mobile Number not validated');
                   }
-                },
-                child: Text(
-                  'Send Otp',
-                  textScaleFactor: 1.2,
-                ))
+                })
           ],
         ),
       ),

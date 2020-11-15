@@ -1,4 +1,7 @@
 import 'package:anisan/constants/sizeConfig.dart';
+import 'package:anisan/state/auth/auth.dart';
+import 'package:anisan/views/screens/splash/SplashScreen.dart';
+import 'package:anisan/widgets/button.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -85,14 +88,15 @@ class _ProfileState extends State<Profile> {
             SizedBox(
               height: 30,
             ),
-            FlatButton(
-              onPressed: () {},
-              child: Text(
-                'LOG OUT',
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Colors.red,
-            )
+            Button(
+                buttonText: 'Log Out',
+                onPressed: () {
+                  Auth.signOut();
+                  Navigator.pushReplacement(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => SplashScreen()));
+                })
           ],
         ),
       ),
