@@ -4,7 +4,6 @@ import 'package:anisan/constants/MyColors.dart';
 import 'package:anisan/constants/sizeConfig.dart';
 import 'package:anisan/state/auth/auth.dart';
 import 'package:anisan/views/screens/home/home.dart';
-import 'package:anisan/views/screens/location/request/request_location.dart';
 import 'package:anisan/views/screens/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -158,12 +157,12 @@ class _SplashScreenState extends State<SplashScreen> {
                   children: [
                     IntroViewsFlutter(
                       pages,
-                      onTapDoneButton: () => navigateToLogin(),
+                      onTapDoneButton: () => navigateToHome(),
                       showSkipButton: true,
                       doneText: Text(
                         "Get Started",
                       ),
-                      onTapSkipButton: () => navigateToLogin(),
+                      onTapSkipButton: () => navigateToHome(),
                       pageButtonsColor: MyColors.primaryColor,
                       pageButtonTextStyles: new TextStyle(
                         // color: Colors.indigo,
@@ -203,10 +202,10 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  navigateToLogin() async {
+  navigateToHome() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isNewUser', false);
-    return Navigator.pushReplacement(context,
-        new MaterialPageRoute(builder: (context) => RequestLocation()));
+    return Navigator.pushReplacement(
+        context, new MaterialPageRoute(builder: (context) => Home()));
   }
 }

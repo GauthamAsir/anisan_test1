@@ -1,18 +1,15 @@
-import 'package:anisan/constants/MyColors.dart';
+import 'dart:math' as math;
+
 import 'package:anisan/constants/sizeConfig.dart';
 import 'package:anisan/state/auth/auth.dart';
-import 'package:anisan/views/screens/location/request/request_location.dart';
 import 'package:anisan/views/screens/login/login.dart';
 import 'package:anisan/views/screens/profile/profile.dart';
 import 'package:anisan/views/screens/refer/refer.dart';
 import 'package:anisan/widgets/network_image.dart';
+import 'package:anisan/widgets/utils.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
-
 import 'package:flutter_swiper/flutter_swiper.dart';
-
-import 'components/DrawerTitle.dart';
-import 'components/ListItem.dart';
+import 'package:share/share.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -93,41 +90,88 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ), // Th
       drawer: Drawer(
         child: Container(
-          color: MyColors.primaryColorSwatch.shade900,
           child: ListView(
             children: [
-              DrawerHeader(
-                child: DrawerTitle('Anisan'),
+              _buildOfferBox(),
+              SizedBox(
+                height: 10,
               ),
-              ListItem('home'.trim().toUpperCase(), () {
-                //Navigator.of(context).pushReplacementNamed(Routes.home);
-              }),
-              ListItem('My Account'.trim(), () {
-                Navigator.of(context).push(
-                    new MaterialPageRoute(builder: (context) => Profile()));
-              }),
-              ListItem('My Orders'.trim(), () {
-                //Navigator.of(context).pushReplacementNamed(Routes.home);
-              }),
-              ListItem('Credits'.trim(), () {
-                //Navigator.of(context).pushReplacementNamed(Routes.home);
-              }),
-              ListItem('Refer'.trim(), () {
-                Navigator.of(context)
-                    .push(new MaterialPageRoute(builder: (context) => Refer()));
-              }),
-              ListItem('Terms and Conditions'.trim(), () {
-                //Navigator.of(context).pushReplacementNamed(Routes.home);
-              }),
-              ListItem('FAQ\'s'.trim(), () {
-                //Navigator.of(context).pushReplacementNamed(Routes.home);
-              }),
-              ListItem('Privacy Policy'.trim(), () {
-                //Navigator.of(context).pushReplacementNamed(Routes.home);
-              }),
-              ListItem('Share'.trim(), () {
-                //Navigator.of(context).pushReplacementNamed(Routes.home);
-              }),
+              Container(
+                color: Colors.grey,
+                height: 1,
+              ),
+              Utils().drawerTile1(
+                  label: 'Home',
+                  icon: Icon(
+                    Icons.home,
+                    size: 28,
+                  )),
+              Utils().drawerTile1(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(builder: (context) => Profile()));
+                  },
+                  label: 'My Account',
+                  icon: Icon(
+                    Icons.person,
+                    size: 28,
+                  )),
+              Utils().drawerTile1(
+                  label: 'My Orders',
+                  icon: Icon(
+                    Icons.restore,
+                    size: 28,
+                  )),
+              Utils().drawerTile1(
+                  label: 'Wallet',
+                  icon: Icon(
+                    Icons.account_balance_wallet_rounded,
+                    size: 28,
+                  )),
+              Utils().drawerTile1(
+                  label: 'Contact Us',
+                  icon: Icon(
+                    Icons.perm_contact_calendar_rounded,
+                    size: 28,
+                  )),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                color: Colors.grey,
+                height: 1,
+              ),
+              Utils().drawerTile2(
+                  label: 'Refer',
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(builder: (context) => Refer()));
+                  }),
+              Utils().drawerTile2(
+                label: 'Terms and Conditions',
+              ),
+              Utils().drawerTile2(
+                label: 'FAQ\'s',
+              ),
+              Utils().drawerTile2(
+                label: 'Privacy Policy',
+              ),
+              Utils().drawerTile2(
+                  label: 'Share',
+                  onTap: () =>
+                      Share.share('Check out our app https://codehelios.com')),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                color: Colors.grey,
+                height: 1,
+              ),
+              Utils().drawerTile2(
+                label: 'Ver 1.0',
+              ),
             ],
           ),
         ),
@@ -158,16 +202,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             onPressed: () {},
           ),
         ],
-        IconButton(
-          icon: Icon(
-            Icons.location_on,
-            color: Colors.grey.shade700,
-          ),
-          onPressed: () {
-            return Navigator.of(context).push(
-                new MaterialPageRoute(builder: (context) => RequestLocation()));
-          },
-        ),
         IconButton(
           icon: Icon(
             Icons.account_circle_rounded,

@@ -5,7 +5,7 @@ import 'package:anisan/state/auth/auth.dart';
 import 'package:anisan/views/screens/home/home.dart';
 import 'package:anisan/views/screens/otp_verification/components/OTPField.dart';
 import 'package:anisan/widgets/button.dart';
-import 'package:anisan/widgets/toast.dart';
+import 'package:anisan/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -102,14 +102,14 @@ class _OtpVerificationState extends State<OtpVerification> {
                       try {
                         await Auth.signInWithOTP(smsCode, verificationId);
                         if (Auth.auth.currentUser != null) {
-                          ToastText.toast('Logged in');
+                          Utils.toast('Logged in');
                           navigate(Home());
                         }
                       } catch (e) {
                         loading = false;
                         handleState();
                         var ea = (e as FirebaseAuthException);
-                        ToastText.toast(
+                        Utils.toast(
                           ea.code == "invalid-verification-code"
                               ? "Wrong OTP Try Again."
                               : ea.code == null
@@ -154,7 +154,7 @@ class _OtpVerificationState extends State<OtpVerification> {
       },
       verificationFailed: (FirebaseAuthException e) {
         print(e);
-        ToastText.toast(e.code);
+        Utils.toast(e.code);
       },
       codeSent: (String verificationId, int resendToken) {
         // Sign the user in (or link) with the credential
