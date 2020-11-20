@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:anisan/constants/MyColors.dart';
 import 'package:anisan/constants/sizeConfig.dart';
-import 'package:anisan/state/auth/auth.dart';
-import 'package:anisan/views/screens/home/home.dart';
-import 'package:anisan/views/screens/login/login.dart';
+import 'package:anisan/views/screens/home/home2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
@@ -127,11 +125,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
             // Once complete, show your application
             if (snapshot.connectionState == ConnectionState.done) {
-              /// Handle Auth here
-              if (Auth.auth.currentUser != null)
-                return Home();
-              else
-                return Login();
+              return Home2();
             }
 
             // Otherwise, show something whilst waiting for initialization to complete
@@ -206,6 +200,6 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isNewUser', false);
     return Navigator.pushReplacement(
-        context, new MaterialPageRoute(builder: (context) => Home()));
+        context, new MaterialPageRoute(builder: (context) => Home2()));
   }
 }

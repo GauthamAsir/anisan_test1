@@ -1,7 +1,9 @@
+import 'package:anisan/constants/MyColors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
+import 'package:flutter/services.dart'
+    show DeviceOrientation, SystemChrome, SystemUiOverlayStyle;
 
 import 'constants/style.dart';
 import 'views/screens/splash/SplashScreen.dart';
@@ -17,6 +19,15 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    /*SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: MyColors.primaryColor,
+        statusBarBrightness: Brightness.light));*/
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: MyColors.primaryColor, // Color for Android
+        statusBarBrightness:
+            Brightness.light // Dark == white status bar -- for IOS.
+        ));
 
     return MaterialApp(
       title: 'App Title',

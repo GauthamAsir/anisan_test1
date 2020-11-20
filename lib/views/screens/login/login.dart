@@ -1,4 +1,5 @@
 import 'package:anisan/constants/sizeConfig.dart';
+import 'package:anisan/views/screens/home/home.dart';
 import 'package:anisan/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -70,19 +71,31 @@ class _LoginState extends State<Login> {
             SizedBox(
               height: Sizes.screenHeight * 0.2,
             ),
-            Button(
-                buttonText: 'Send Otp',
-                onPressed: () {
-                  if (_validated) {
-                    Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (context) =>
-                                OtpVerification(_controller.text)));
-                  } else {
-                    toast('Mobile Number not validated');
-                  }
-                })
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Button(
+                    buttonText: 'Skip',
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
+                          new MaterialPageRoute(builder: (context) => Home()));
+                    }),
+                Spacer(),
+                Button(
+                    buttonText: 'Send Otp',
+                    onPressed: () {
+                      if (_validated) {
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) =>
+                                    OtpVerification(_controller.text)));
+                      } else {
+                        toast('Mobile Number not validated');
+                      }
+                    }),
+              ],
+            )
           ],
         ),
       ),

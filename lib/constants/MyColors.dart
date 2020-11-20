@@ -17,9 +17,8 @@ class MyColors {
     return MaterialColor(0xFF2F3C7E, color);
   }
 
-  static const primaryColor = Color(0xFF2F3C7E);
-  static const kPrimaryDark = Color(0xFF2F3C7E);
+  static const primaryColor = Color(0xFFF8BBD0);
+  static const kPrimaryDark = Color(0xFFf0f0f0);
 
-
-  static const Color backgroudColor = Color(0xFFF9F9F9);
+  static const Color backgroudColor = Color(0xFFdedede);
 }
