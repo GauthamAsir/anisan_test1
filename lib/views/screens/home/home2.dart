@@ -114,17 +114,15 @@ class _Home2State extends State<Home2> {
 
   Widget _buildError(
       {String error = 'Something went wrong.\nPlease try again later'}) {
-    return Flexible(
-      child: Container(
-        alignment: Alignment.center,
-        height: double.infinity,
-        width: double.infinity,
-        child: Text(
-          error,
-          style: TextStyle(fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-          textScaleFactor: 2,
-        ),
+    return Container(
+      alignment: Alignment.center,
+      height: double.infinity,
+      width: double.infinity,
+      child: Text(
+        error,
+        style: TextStyle(fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
+        textScaleFactor: 2,
       ),
     );
   }
@@ -328,27 +326,25 @@ class _Home2State extends State<Home2> {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(12))),
                 padding: const EdgeInsets.all(12),
-                child: Flexible(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: NetworkImage(categoryImg[index]),
-                              fit: BoxFit.cover),
-                        ),
-                        alignment: Alignment.bottomCenter,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: NetworkImage(categoryImg[index]),
+                            fit: BoxFit.cover),
                       ),
-                      _sizedBox(h: 20),
-                      Text(
-                        categoryTitle[index],
-                        style: TextStyle(fontSize: 18),
-                      )
-                    ],
-                  ),
+                      alignment: Alignment.bottomCenter,
+                    ),
+                    _sizedBox(h: 20),
+                    Text(
+                      categoryTitle[index],
+                      style: TextStyle(fontSize: 18),
+                    )
+                  ],
                 ),
               );
             },
